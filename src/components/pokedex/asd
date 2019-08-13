@@ -1,0 +1,50 @@
+import React, { Component } from 'react'
+
+export default class PokedexGridComponent extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            pokemons: [],
+        }
+    }
+
+    componentDidMount() {
+        this.getPokemons();
+    }
+
+    render() {
+        return (
+            <div>
+                <input className="btn btn-success btn-sm mb-5" type="button" onClick={this.getPokemons} value="Buscar Pokemons" />
+                <div>
+                    {/* {
+                        this.state.all.map((data, idx) => {
+                            return (<li key={idx}>{data["name"]}</li>)
+                        })
+                    } */}
+                </div>
+            </div>
+        )
+    }
+
+    getPokemons = () => {
+        var pokemon = [];
+        fetch("https://pokeapi.co/api/v2/pokemon?offset=20&limit=964")
+            .then((data) => {
+                return data.json();
+            })
+            .then((data) => {
+                data["results"].forEach(data => {
+                    console.log(data)
+                    // pokemon.push({
+                    //     name: data.name.charAt(0).toUpperCase() + data.name.slice(1),
+                    //     img: data
+                    // }) 
+                })
+
+                this.setState({ pokemons: pokemon });
+                console.log(this.state.pokemons);
+            })
+        }
+}
